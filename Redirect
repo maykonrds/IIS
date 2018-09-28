@@ -1,0 +1,7 @@
+<rule name="Redirect requests to azure websites domain" stopProcessing="true">
+            <match url="(.*)" />  
+            <conditions logicalGrouping="MatchAny">
+              <add input="{HTTP_HOST}" pattern="^www\.contoso\.com$" />
+            </conditions>
+            <action type="Redirect" url="http://mywebsite.azurewebsites.net/{R:0}" />  
+          </rule>   
