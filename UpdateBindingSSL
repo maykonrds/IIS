@@ -1,0 +1,19 @@
+<#PSScriptInfo
+.VERSION 1.0
+
+.AUTHOR Maykon Rodrigues dos Santos
+
+.DATA March 2019
+
+#>
+#Thumprint
+$certShop="XXXXX8560700000000007C042ZZZZZZZ"
+$cert=get-item -Path "cert:\LocalMachine\My\$certShop" 
+$binding = Get-WebBinding | Where-Object {$_.bindingInformation -like "*mywebsite.mydomain.com*" -and $_.protocol -eq "https"} 
+
+# This script updates the SSL Binding for IIS WebSites, very useful if you have a lot of websites and use the same certificate
+# In my case I use a WildCard certificate.
+
+foreach ($app in $binding){
+$binding.AddSslCertificate($cert.GetCertHashString(), "my")
+}
